@@ -9,17 +9,17 @@ formAgregarProducto.addEventListener('submit', e => {
     const producto = {
         title: document.getElementById("nombre").value,
         price: document.getElementById("precio").value,
-        thumbnail: document.getElementById("foto").value,
+        thumbnail: document.getElementById("foto").value
 
 
     };
     socket.emit("productoNuevo", producto);
-    formAgregarProducto.reset()
+    // formAgregarProducto.reset()
 })
 
-socket.on('productos', productos => {
+socket.on('productos', async (productos) => {
     //generar el html y colocarlo en el tag productos llamando a la funcion makeHtmlTable
-    const html = makeHtmlTable(productos);
+    const html = await makeHtmlTable(productos);
     document.getElementById("productos").innerHTML = html;
 });
 
@@ -62,7 +62,7 @@ socket.on('mensajes', mensajes => {
 
 function makeHtmlList(mensajes) {
     //Armar nuestro html para mostrar los mensajes como lo hicimos en clase
-    const html = mensajes.map(elem => {
+    return mensajes.map(elem => {
         return (`<div><strong>${elem.autor}</strong>:<em>${elem.texto}</em></div>`)
     }).join(" ");
 }
